@@ -26,7 +26,7 @@ router.post("/create-order", async (req, res) => {
   }
 });
 
-// VERIFY PAYMENT
+
 router.post("/verify", (req, res) => {
   const {
     razorpay_order_id,
