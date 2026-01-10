@@ -13,20 +13,25 @@ import razorpayRoutes from "./routes/payment";
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:8080",
+  "https://zentik-fashion.vercel.app",
+  "https://zercindia.in",
+];
+
+const isAllowedOrigin = (origin: string) => {
+  if (allowedOrigins.includes(origin)) return true;
+  if (origin.endsWith(".vercel.app")) return true;
+
+  return false;
+};
+
 app.use(
   cors({
     origin: (origin, callback) => {
       if (!origin) return callback(null, true);
 
-      const allowedOrigins = [
-        "http://localhost:8080",
-        "https://zentik-fashion.vercel.app",
-        "https://zentik-fashion-git-main-harshits-projects-154ae818.vercel.app",
-        "https://zentik-fashion-psol1e9zu-harshits-projects-154ae818.vercel.app",
-        "https://zercindia.in",
-      ];
-
-      if (allowedOrigins.includes(origin)) {
+      if (isAllowedOrigin(origin)) {
         return callback(null, true);
       }
 
@@ -37,6 +42,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
 
 
 app.use(express.json());
