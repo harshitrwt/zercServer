@@ -5,16 +5,28 @@
   "private": true,
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/cors": "^2.8.19"
+    "@types/cors": "^2.8.19",
+    "drizzle-kit": "^0.31.8"
   },
   "peerDependencies": {
     "typescript": "^5"
   },
   "dependencies": {
+    "@sanity/client": "^6.21.3",
+    "@types/bcrypt": "^6.0.0",
+    "@types/cookie-parser": "^1.4.10",
+    "@types/jsonwebtoken": "^9.0.10",
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
     "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
     "express": "^5.2.1",
-    "razorpay": "^2.9.6"
+    "jsonwebtoken": "^9.0.3",
+    "nodemailer": "^7.0.12",
+    "postgres": "^3.4.8",
+    "razorpay": "^2.9.6",
+    "zod": "^4.3.5"
   }
 }
