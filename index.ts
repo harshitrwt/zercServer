@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-dotenv.config(); 
+dotenv.config();
 
 import express from "express";
 import cors from "cors";
@@ -21,6 +21,8 @@ app.use(
       const allowedOrigins = [
         "http://localhost:8080",
         "https://zentik-fashion.vercel.app",
+        "https://zentik-fashion-git-main-harshits-projects-154ae818.vercel.app",
+        "https://zentik-fashion-psol1e9zu-harshits-projects-154ae818.vercel.app",
         "https://zercindia.in",
       ];
 
