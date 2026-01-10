@@ -7,18 +7,19 @@ import { eq } from "drizzle-orm";
 const router = Router();
 
 router.get("/", auth, async (req, res) => {
-  const userId = typeof req.user === "string" ? req.user : (req.user as any)?.userId;
-
+  const userId = req.user as string;
   if (!userId) return res.sendStatus(401);
 
-  const user = await db.select()
+  const user = await db
+    .select()
     .from(users)
     .where(eq(users.id, userId))
     .limit(1)
-    .then((res) => res[0]);
+    .then(res => res[0]);
 
   res.json(user);
 });
+
 
 router.get("/orders", auth, async (req, res) => {
   const userId = typeof req.user === "string" ? req.user : (req.user as any)?.userId;

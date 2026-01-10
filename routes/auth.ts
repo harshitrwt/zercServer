@@ -1,4 +1,6 @@
 // routes/auth.ts
+import dotenv from "dotenv";
+dotenv.config();
 import { Router } from "express";
 import { db } from "../db/client";
 import { users, passwordResets } from "../db/schema";
@@ -56,8 +58,8 @@ router.post("/login", async (req, res) => {
   res
     .cookie("token", signJWT(user.id), {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       maxAge: 24 * 60 * 60 * 1000,
       path: "/",
     })
