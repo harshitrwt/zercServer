@@ -41,30 +41,39 @@ router.post("/signup", async (req, res) => {
   res.json({ success: true });
 });
 
-router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
 
-  const user = await db.select()
+router.post("/login", async (req, res) => {
+  const parsed = loginSchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(400).json({ error: "Invalid input" });
+  }
+
+  const { email, password } = parsed.data;
+
+  const user = await db
+    .select()
     .from(users)
     .where(eq(users.email, email))
     .limit(1)
-    .then((res) => res[0]);
+    .then(res => res[0]);
 
   if (!user) return res.status(401).json({ error: "Invalid credentials" });
 
   const valid = await verifyPassword(password, user.passwordHash);
   if (!valid) return res.status(401).json({ error: "Invalid credentials" });
 
-  res
-    .cookie("token", signJWT(user.id), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      maxAge: 24 * 60 * 60 * 1000,
-      path: "/",
-    })
-    .json({ success: true });
+  const token = signJWT(user.id);
+
+  res.json({
+    token,
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    },
+  });
 });
+
 
 router.post("/forgot-password", async (req, res) => {
   const token = crypto.randomUUID();
